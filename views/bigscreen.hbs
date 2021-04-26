@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Big Screen</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: "Longhorn";
+            src: url("/fonts/LonghornBold.eot");
+            src: url("/fonts/LonghornBold.woff") format("woff"),
+            url("/fonts/LonghornBold.otf") format("opentype"),
+            url("/fonts/LonghornBold.svg#filename") format("svg");
+        }
+
+        body {
+            background-color: #40a3f8;
+            color: #f6fffb;
+            overflow:hidden;
+        }
+
+        .inverted {
+            color: #45c7fe;
+            background-color: #f6fffb;
+        }
+
+        .centered {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #content {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle
+        }
+
+
+        #bigthings {
+            font-family: 'Longhorn', Arial, sans-serif;
+            font-weight:normal;
+            font-style:normal;
+            font-size: 65px;
+            text-align: center;
+            margin:0px;
+            padding:0px;
+        }
+
+        #bigthings > span {
+            color: #2b68b6;
+        }
+
+        #big {
+            font-family: 'Longhorn', Arial, sans-serif;
+            font-weight:normal;
+            font-style:normal;
+            font-size: 65px;
+            text-align: center;
+            margin:0px;
+            padding:0px;
+        }
+        #small {
+            font-family: 'Longhorn', Arial, sans-serif;
+            font-weight:normal;
+            font-style:normal;
+            font-size: 35px;
+            text-align: center;
+            margin:0px;
+            padding:0px;
+            letter-spacing: 5px;
+            animation: spacing 2s;
+        }
+
+        @keyframes spacing {
+            0%   { 
+                letter-spacing: 15px;		
+            }
+            100%   { 
+                letter-spacing: 5px;		
+            }
+        }
+
+        @keyframes example1 {
+            0%   { 
+                transform: translateX(50%); 		
+            }
+            25% { 
+                transform: translateX(0%); 
+            }
+        }
+    </style>
+  </head>
+  <body id="animation">
+
+    <div class="flex items-center justify-center h-screen">
+        <div class="p-10">
+            <h1 id="big">Nous sommes ouverts</h1>
+            <h1 id="small">Venez chercher des masques!</h1>
+
+            <!--<h1 id="big">We are doing something small</h1>
+            <h1 id="small">That leads to something</h1>-->
+            <h1 id="bigthings" style="display:none;">B<span>I</span>G</h1>
+        </div>
+    </div>
+
+    <audio src="/bigscreen.mp3" ></audio>
+  </body>
+  <script>
+      window.addEventListener("click", event => {
+        const audio = document.querySelector("audio");
+        audio.volume = 0.2;
+        audio.loop = true;
+        audio.play();
+      });
+      
+
+
+      var trigger = false;
+      var index = 0;
+
+
+      function somethingBig() {
+            index++;
+            console.log("Active; " + "index=" + index)
+
+            switch(index) {
+                case 1:
+                    document.getElementById('big').innerHTML = "Nous sommes ouverts";
+                    document.getElementById('small').innerHTML = "Venez chercher des masques!";
+                    break;
+                case 2:
+                    document.getElementById('big').innerHTML = "Nous faisons quelque chose de petit";
+                    document.getElementById('small').innerHTML = "Cela mène à quelque chose";
+                    index = 0;
+                    break;
+            }
+
+            switch(trigger) {
+                case true: 
+                    document.getElementById('animation').classList.add('inverted');
+                    trigger = false;
+                    break;
+                case false:
+                    document.getElementById('animation').classList.remove('inverted');
+                    trigger = true;
+                    break;
+            }
+            setTimeout(somethingBig, 5000);
+      }
+
+      somethingBig();
+  </script>
+</html>
